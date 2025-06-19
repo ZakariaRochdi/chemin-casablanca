@@ -60,8 +60,8 @@ def index():
             end_node = ox.distance.nearest_nodes(G, X=end_point[1], Y=end_point[0])
             chemin = nx.shortest_path(G, start_node, end_node, weight='length')
 
-            # Distance + Durée
-            distance_m = sum(ox.utils_graph.get_route_edge_attributes(G, chemin, 'length'))
+            # ✅ Distance manuelle sans utils_graph
+            distance_m = sum(G[u][v][0]['length'] for u, v in zip(chemin[:-1], chemin[1:]))
             distance_km = distance_m / 1000
             duree_min = (distance_km / VITESSE_KMH[mode]) * 60
 
@@ -83,9 +83,7 @@ def index():
             return render_template('index.html', error=f"❌ Erreur : {e}")
 
     return render_template('index.html')
-import os
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
-

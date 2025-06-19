@@ -7,29 +7,18 @@
 </head>
 <body class="bg-light">
 
-<div class="container mt-5 text-center">
-    <h1 class="mb-4">🧭 Résultat du Chemin le Plus Court</h1>
+<div class="container mt-4">
+    <h2 class="text-center mb-3">🧭 Résultat du Chemin le Plus Court</h2>
 
-    <!-- 📍 Carte -->
-    <div class="card shadow-sm mb-4">
-        <div class="card-body p-2">
-            <iframe src="{{ url_for('static', filename='chemin.html') }}"
-                    width="100%" height="450px" frameborder="0"></iframe>
-        </div>
+    <div class="card shadow-sm p-3 mb-3 bg-white">
+        <iframe src="{{ url_for('static', filename='chemin.html') }}" width="100%" height="500px" style="border:none;"></iframe>
     </div>
 
-    <!-- ℹ️ Détails -->
-    <div class="card p-3 mb-4 shadow-sm bg-white">
-        <h5 class="mb-2">📏 Distance : <strong>{{ distance }} km</strong></h5>
-        <h5 class="mb-2">⏱️ Durée estimée : <strong>{{ duree }} minutes</strong></h5>
-        <h5 class="mb-0">🚦 Mode choisi : <strong>{{ mode }}</strong></h5>
-    </div>
-
-    <!-- 🔁 Bouton retour -->
-    <div class="text-center mt-4 mb-5">
-        <a href="/" class="btn btn-primary btn-lg w-100">
-            🔁 Nouveau Trajet
-        </a>
+    <div class="card shadow-sm p-3 mb-4 bg-white text-center">
+        <p><strong>Distance :</strong> {{ distance }} km</p>
+        <p><strong>Durée estimée :</strong> {{ duree }} minutes</p>
+        <p><strong>Mode choisi :</strong> {{ mode }}</p>
+        <a href="/" class="btn btn-primary">🔁 Nouveau Trajet</a>
     </div>
 </div>
 

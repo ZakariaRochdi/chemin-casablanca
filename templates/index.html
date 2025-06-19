@@ -7,52 +7,55 @@
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Google Fonts (facultatif mais joli) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome pour des icônes animées (optionnel) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(to right, #f0f4f8, #e9eff5);
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #f0f4f8, #e0ebf6);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: fadeIn 1s ease-in-out;
         }
 
         h1 {
-            animation: slideDown 0.8s ease;
+            animation: slideDown 0.6s ease;
             font-weight: 600;
             color: #2c3e50;
         }
 
         .form-container {
-            background-color: white;
+            background-color: #ffffff;
             border-radius: 12px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
             padding: 40px;
             width: 100%;
             max-width: 550px;
-            animation: fadeUp 0.7s ease;
+            animation: fadeUp 0.8s ease;
         }
 
-        .form-label {
-            font-weight: 500;
-            color: #34495e;
+        .form-label i {
+            margin-right: 8px;
+            transition: transform 0.4s ease;
         }
 
-        .form-control:focus, .form-select:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        .form-label:hover i {
+            transform: scale(1.2) rotate(10deg);
+            color: #007bff;
+        }
+
+        input:focus, select:focus {
+            animation: bounceFocus 0.3s;
         }
 
         .btn-primary {
-            transition: all 0.3s ease;
+            transition: transform 0.2s, background-color 0.3s;
         }
 
         .btn-primary:hover {
+            transform: scale(1.02);
             background-color: #0056b3;
         }
 
@@ -60,19 +63,20 @@
             transform: scale(0.98);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(-30px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounceFocus {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
@@ -87,36 +91,38 @@
 
     <form method="post" class="form-container" id="cheminForm">
         <div class="mb-3">
-            <label for="start" class="form-label">📍 Point de départ :</label>
+            <label for="start" class="form-label"><i class="fas fa-map-pin"></i> Point de départ :</label>
             <input type="text" class="form-control" name="start" id="start" placeholder="ex: Marjane Californie" required>
         </div>
 
         <div class="mb-3">
-            <label for="end" class="form-label">🏁 Point d'arrivée :</label>
+            <label for="end" class="form-label"><i class="fas fa-flag-checkered"></i> Point d'arrivée :</label>
             <input type="text" class="form-control" name="end" id="end" placeholder="ex: Faculté des Sciences" required>
         </div>
 
         <div class="mb-3">
-            <label for="mode" class="form-label">🚦 Mode de transport :</label>
+            <label for="mode" class="form-label"><i class="fas fa-car"></i> Mode de transport :</label>
             <select class="form-select" name="mode" id="mode">
                 <option value="voiture">🚗 Voiture</option>
                 <option value="pied">🚶‍♂️ À pied</option>
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100" id="calculerBtn">Calculer</button>
+        <button type="submit" class="btn btn-primary w-100" id="calculerBtn">
+            <i class="fas fa-route"></i> Calculer
+        </button>
     </form>
 </div>
 
-<!-- JavaScript pour animation bouton -->
+<!-- JS pour animation du bouton -->
 <script>
     const btn = document.getElementById("calculerBtn");
     const form = document.getElementById("cheminForm");
 
     form.addEventListener("submit", () => {
         btn.disabled = true;
-        btn.innerHTML = "⏳ Calcul en cours...";
-        btn.style.backgroundColor = "#6c757d";
+        btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Calcul en cours...`;
+        btn.classList.add("btn-secondary");
     });
 </script>
 

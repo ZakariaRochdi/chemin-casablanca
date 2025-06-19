@@ -1,1 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Résultat du Chemin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">🗺️ Résultat du Chemin le Plus Court</h2>
+
+    <div class="card shadow-sm p-3 mb-4 bg-white">
+        <iframe src="{{ url_for('static', filename='chemin.html') }}" width="100%" height="500px" class="border rounded"></iframe>
+    </div>
+
+    <div class="card p-4 bg-white shadow-sm text-center">
+        <p><strong>🚦 Mode choisi :</strong> {{ '🚗 Voiture' if mode == 'voiture' else '🚶‍♂️ À pied' }}</p>
+        <p><strong>📏 Distance :</strong> {{ distance }} km</p>
+        <p><strong>⏱️ Durée estimée :</strong> {{ duree }} minutes</p>
+        <a href="/" class="btn btn-secondary mt-3">🔙 Retour à l'accueil</a>
+    </div>
+</div>
+
+</body>
+</html>
 

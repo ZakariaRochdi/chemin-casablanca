@@ -6,31 +6,31 @@ import os
 
 app = Flask(__name__)
 
-# 📍 Chemins des fichiers locaux
+# 📍 Fichiers cache pour les graphes
 GRAPH_FILES = {
     "voiture": "static/casa_drive.graphml",
     "pied": "static/casa_walk.graphml"
 }
 
-# 🚗 Vitesse en km/h
+# 🚗 Vitesse moyenne en km/h
 VITESSE_KMH = {
     "voiture": 40,
     "pied": 5
 }
 
-# 📥 Chargement des graphes avec cache
+# 📥 Chargement local ou téléchargement OSM
 def charger_graphe(mode):
-    chemin_fichier = GRAPH_FILES[mode]
-    if os.path.exists(chemin_fichier):
+    chemin = GRAPH_FILES[mode]
+    if os.path.exists(chemin):
         print(f"✅ Chargement local du graphe {mode}")
-        return ox.load_graphml(chemin_fichier)
+        return ox.load_graphml(chemin)
     else:
         print(f"📥 Téléchargement OSM du graphe {mode}")
         G = ox.graph_from_place("Casablanca, Morocco", network_type='drive' if mode == "voiture" else 'walk')
-        ox.save_graphml(G, chemin_fichier)
+        ox.save_graphml(G, chemin)
         return G
 
-# 🌍 Géocodage (adresse → coordonnée)
+# 🌍 Géocodage (adresse → coordonnées)
 def get_location(input_str):
     try:
         if ',' in input_str:
@@ -56,34 +56,34 @@ def index():
             return render_template('index.html', error="⚠️ Adresse invalide.")
 
         try:
+            # 🔍 Noeuds les plus proches
             start_node = ox.distance.nearest_nodes(G, X=start_point[1], Y=start_point[0])
             end_node = ox.distance.nearest_nodes(G, X=end_point[1], Y=end_point[0])
             chemin = nx.shortest_path(G, start_node, end_node, weight='length')
 
-            # ✅ Distance manuelle sans utils_graph
+            # 📏 Calcul distance + durée
             distance_m = sum(G[u][v][0]['length'] for u, v in zip(chemin[:-1], chemin[1:]))
             distance_km = distance_m / 1000
             duree_min = (distance_km / VITESSE_KMH[mode]) * 60
 
-            # 🗺️ Carte Folium
-            m = folium.Map(location=start_point, zoom_start=14)
-            folium.Marker(start_point, popup="Départ", icon=folium.Icon(color="green")).add_to(m)
-            folium.Marker(end_point, popup="Arrivée", icon=folium.Icon(color="red")).add_to(m)
+            # 🗺️ Carte
+            m = folium.Map(location=start_point, zoom_start=13)
+            folium.Marker(start_point, tooltip="Départ", icon=folium.Icon(color='green')).add_to(m)
+            folium.Marker(end_point, tooltip="Arrivée", icon=folium.Icon(color='red')).add_to(m)
             coords = [(G.nodes[n]['y'], G.nodes[n]['x']) for n in chemin]
-            folium.PolyLine(coords, color="blue", weight=5).add_to(m)
+            folium.PolyLine(coords, color='blue', weight=4.5).add_to(m)
 
-            # Sauvegarde carte
             m.save("static/chemin.html")
 
-            return render_template('result.html',
+            return render_template("result.html",
                                    distance=round(distance_km, 2),
-                                   duree=round(duree_min),
+                                   duree=int(duree_min),
                                    mode=mode)
         except Exception as e:
-            return render_template('index.html', error=f"❌ Erreur : {e}")
+            return render_template("index.html", error=f"❌ Erreur : {e}")
 
-    return render_template('index.html')
+    return render_template("index.html")
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)

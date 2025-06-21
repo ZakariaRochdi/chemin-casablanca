@@ -30,10 +30,13 @@
       --shadow: rgba(255,255,255,0.05);
     }
     body {
-      margin:0; padding:40px 20px;
-      font-family:'Segoe UI', sans-serif;
-      min-height:100vh; display:flex;
-      align-items:center; justify-content:center;
+      margin: 0;
+      padding: 40px 20px;
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: var(--bg-gradient);
       color: var(--text-color);
       transition: background .6s, color .4s;
@@ -42,12 +45,16 @@
       background: var(--form-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-radius:16px;
-      padding:40px; max-width:520px; width:100%;
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 520px;
+      width: 100%;
       box-shadow: 0 10px 24px var(--shadow);
     }
     h1 {
-      text-align:center; font-weight:600; margin-bottom:30px;
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 30px;
       position: relative;
       font-size: 1.8rem;
     }
@@ -57,50 +64,82 @@
       text-shadow: 0 0 1px #009ee0;
     }
     h1::after {
-      content:''; display:block; height:3px; width:60px;
-      margin:10px auto 0;
-      background:linear-gradient(90deg,#00bfff,#007bff);
-      border-radius:4px;
+      content: '';
+      display: block;
+      height: 3px;
+      width: 60px;
+      margin: 10px auto 0;
+      background: linear-gradient(90deg, #00bfff, #007bff);
+      border-radius: 4px;
     }
-    .form-label i { margin-right:6px; }
+    .form-label i {
+      margin-right: 6px;
+    }
     .form-control, .form-select {
       background: var(--input-bg);
       color: var(--text-color);
-      border:2px solid transparent;
-      border-radius:8px;
+      border: 1px solid transparent;
+      border-radius: 8px;
       background-clip: padding-box, border-box;
       background-origin: border-box;
       background-image: linear-gradient(var(--input-bg),var(--input-bg)),linear-gradient(135deg,#00eaff,#007bff);
       transition: border-color .3s, box-shadow .3s;
     }
-    .form-control::placeholder {color:#999;}
-    .form-control:focus, .form-select:focus {
-      border-color:#00bfff;
-      box-shadow:0 0 8px rgba(0,191,255,0.2);
-      outline:none;
+    .form-control::placeholder {
+      color: #999;
     }
+    .form-control:focus, .form-select:focus {
+      border: 1px solid #00bfff;
+      box-shadow: 0 0 6px rgba(0,191,255,0.3);
+      outline: none;
+    }
+
+    /* ✅ Correction pour la lisibilité en mode sombre */
+    body.dark-mode .form-control,
+    body.dark-mode .form-select {
+      color: #f0f2f5;
+      background-color: #2e2e3e;
+      border: 1px solid #00bfff;
+      box-shadow: none;
+    }
+    body.dark-mode .form-control:focus,
+    body.dark-mode .form-select:focus {
+      border: 1px solid #66d9ef;
+      background-color: #2a2a3a;
+      box-shadow: 0 0 6px rgba(0,191,255,0.3);
+    }
+    body.dark-mode .form-control::placeholder {
+      color: #aaa;
+    }
+
     .btn-primary {
-      font-weight:500;
-      background-color:var(--btn-color);
-      border-color:var(--btn-color);
-      color:white;
-      box-shadow:0 0 6px rgba(0,123,255,0.3);
-      position:relative; overflow:hidden;
+      font-weight: 500;
+      background-color: var(--btn-color);
+      border-color: var(--btn-color);
+      color: white;
+      box-shadow: 0 0 6px rgba(0,123,255,0.3);
+      position: relative;
+      overflow: hidden;
       transition: all .3s;
     }
     .btn-primary:hover {
-      background-color:#0056b3;
-      box-shadow:0 0 10px #00bfff;
-      transform:scale(1.01);
+      background-color: #0056b3;
+      box-shadow: 0 0 10px #00bfff;
+      transform: scale(1.01);
     }
     .btn-primary:active {
-      transform:scale(.97);
+      transform: scale(.97);
     }
     .theme-toggle {
-      position:absolute; top:20px; right:20px;
-      background:transparent; border:none;
-      font-size:24px; color:var(--text-color);
-      cursor:pointer; transition:color .3s;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: color .3s;
     }
   </style>
 </head>

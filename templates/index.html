@@ -1,130 +1,168 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Chemin le plus court - Casablanca</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome pour des icônes animées (optionnel) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="shortcut icon" href="https://symbl-cdn.com/i/webp/e8/338a6e4efcdb868086b1415c87c5f8.webp" />
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(to right, #f0f4f8, #e0ebf6);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        h1 {
-            animation: slideDown 0.6s ease;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .form-container {
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-            padding: 40px;
-            width: 100%;
-            max-width: 550px;
-            animation: fadeUp 0.8s ease;
-        }
-
-        .form-label i {
-            margin-right: 8px;
-            transition: transform 0.4s ease;
-        }
-
-        .form-label:hover i {
-            transform: scale(1.2) rotate(10deg);
-            color: #007bff;
-        }
-
-        input:focus, select:focus {
-            animation: bounceFocus 0.3s;
-        }
-
-        .btn-primary {
-            transition: transform 0.2s, background-color 0.3s;
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.02);
-            background-color: #0056b3;
-        }
-
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes bounceFocus {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-            100% { transform: scale(1); }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Chemin le Plus Court - Casablanca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Trouvez le chemin le plus court à Casablanca en voiture ou à pied. Application interactive et élégante.">
+  <meta property="og:title" content="Chemin le Plus Court à Casablanca">
+  <meta property="og:description" content="Application pour calculer rapidement un itinéraire dans Casablanca.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0d6efd">
+  <link rel="icon" id="favicon" href="light-favicon.ico">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #f0faff, #dbefff);
+      --text-color: #1c2c40;
+      --form-bg: rgba(255,255,255,0.85);
+      --input-bg: #fff;
+      --btn-color: #0d6efd;
+      --shadow: rgba(0,0,0,0.1);
+    }
+    body.dark-mode {
+      --bg-gradient: linear-gradient(135deg, #101820, #1c1c2e);
+      --text-color: #f0f2f5;
+      --form-bg: rgba(30,30,45,0.85);
+      --input-bg: #2e2e3e;
+      --btn-color: #4dabf7;
+      --shadow: rgba(255,255,255,0.05);
+    }
+    body {
+      margin:0; padding:40px 20px;
+      font-family:'Segoe UI', sans-serif;
+      min-height:100vh; display:flex;
+      align-items:center; justify-content:center;
+      background: var(--bg-gradient);
+      color: var(--text-color);
+      transition: background .6s, color .4s;
+    }
+    .form-container {
+      background: var(--form-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius:16px;
+      padding:40px; max-width:520px; width:100%;
+      box-shadow: 0 10px 24px var(--shadow);
+    }
+    h1 {
+      text-align:center; font-weight:600; margin-bottom:30px;
+      position: relative;
+      font-size: 1.8rem;
+    }
+    h1 span.glow {
+      display: inline-block;
+      color: #009ee0;
+      text-shadow: 0 0 1px #009ee0;
+    }
+    h1::after {
+      content:''; display:block; height:3px; width:60px;
+      margin:10px auto 0;
+      background:linear-gradient(90deg,#00bfff,#007bff);
+      border-radius:4px;
+    }
+    .form-label i { margin-right:6px; }
+    .form-control, .form-select {
+      background: var(--input-bg);
+      color: var(--text-color);
+      border:2px solid transparent;
+      border-radius:8px;
+      background-clip: padding-box, border-box;
+      background-origin: border-box;
+      background-image: linear-gradient(var(--input-bg),var(--input-bg)),linear-gradient(135deg,#00eaff,#007bff);
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .form-control::placeholder {color:#999;}
+    .form-control:focus, .form-select:focus {
+      border-color:#00bfff;
+      box-shadow:0 0 8px rgba(0,191,255,0.2);
+      outline:none;
+    }
+    .btn-primary {
+      font-weight:500;
+      background-color:var(--btn-color);
+      border-color:var(--btn-color);
+      color:white;
+      box-shadow:0 0 6px rgba(0,123,255,0.3);
+      position:relative; overflow:hidden;
+      transition: all .3s;
+    }
+    .btn-primary:hover {
+      background-color:#0056b3;
+      box-shadow:0 0 10px #00bfff;
+      transform:scale(1.01);
+    }
+    .btn-primary:active {
+      transform:scale(.97);
+    }
+    .theme-toggle {
+      position:absolute; top:20px; right:20px;
+      background:transparent; border:none;
+      font-size:24px; color:var(--text-color);
+      cursor:pointer; transition:color .3s;
+    }
+  </style>
 </head>
 <body>
-
-<div class="container">
-    <h1 class="text-center mb-4">🧭 Calcul du Plus Court Chemin à Casablanca</h1>
-
-    {% if error %}
-        <div class="alert alert-danger">{{ error }}</div>
-    {% endif %}
-
-    <form method="post" class="form-container" id="cheminForm">
-        <div class="mb-3">
-            <label for="start" class="form-label"><i class="fas fa-map-pin"></i> Point de départ :</label>
-            <input type="text" class="form-control" name="start" id="start" placeholder="ex: Marjane Californie" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="end" class="form-label"><i class="fas fa-flag-checkered"></i> Point d'arrivée :</label>
-            <input type="text" class="form-control" name="end" id="end" placeholder="ex: Faculté des Sciences" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="mode" class="form-label"><i class="fas fa-car"></i> Mode de transport :</label>
-            <select class="form-select" name="mode" id="mode">
-                <option value="voiture">🚗 Voiture</option>
-                <option value="pied">🚶‍♂️ À pied</option>
-            </select>
-        </div>
-
-        <button type="submit" class="btn btn-primary w-100" id="calculerBtn">
-            <i class="fas fa-route"></i> Calculer
-        </button>
+  <button class="theme-toggle" id="themeToggle" aria-label="Changer le thème">
+    <i class="fas fa-moon"></i>
+  </button>
+  <div class="form-container">
+    <h1><span class="glow"><i class="fas fa-location-arrow"></i> Chemin le Plus Court à Casablanca</span></h1>
+    <form id="cheminForm">
+      <div class="mb-3">
+        <label for="start" class="form-label"><i class="fas fa-map-pin"></i> Point de départ :</label>
+        <input type="text" class="form-control" id="start" placeholder="ex: Marjane Californie" required>
+      </div>
+      <div class="mb-3">
+        <label for="end" class="form-label"><i class="fas fa-flag-checkered"></i> Point d'arrivée :</label>
+        <input type="text" class="form-control" id="end" placeholder="ex: Faculté des Sciences" required>
+      </div>
+      <div class="mb-4">
+        <label for="mode" class="form-label"><i class="fas fa-car"></i> Mode de transport :</label>
+        <select class="form-select" id="mode">
+          <option value="voiture">🚗 Voiture</option>
+          <option value="pied">🚶‍♂️ À pied</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary w-100" id="calculerBtn">
+        <i class="fas fa-route"></i> Calculer
+      </button>
     </form>
-</div>
-
-<!-- JS pour animation du bouton -->
-<script>
-    const btn = document.getElementById("calculerBtn");
+  </div>
+  <script>
     const form = document.getElementById("cheminForm");
+    const btn = document.getElementById("calculerBtn");
+    const toggleBtn = document.getElementById("themeToggle");
+    const icon = toggleBtn.querySelector("i");
+    const favicon = document.getElementById("favicon");
 
-    form.addEventListener("submit", () => {
-        btn.disabled = true;
-        btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Calcul en cours...`;
-        btn.classList.add("btn-secondary");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (navigator.vibrate) navigator.vibrate(100);
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Calcul en cours...`;
+      btn.classList.remove("btn-primary");
+      btn.classList.add("btn-secondary");
+      setTimeout(() => {
+        btn.classList.replace("btn-secondary","btn-success");
+        btn.innerHTML = `<i class="fas fa-check-circle"></i> Chemin trouvé !`;
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.classList.replace("btn-success","btn-primary");
+          btn.innerHTML = `<i class="fas fa-route"></i> Calculer`;
+        }, 2500);
+      }, 2000);
     });
-</script>
 
+    toggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+      icon.classList.toggle("fa-sun");
+      icon.classList.toggle("fa-moon");
+      favicon.href = document.body.classList.contains("dark-mode") ? "dark-favicon.ico" : "light-favicon.ico";
+      if (navigator.vibrate) navigator.vibrate(50);
+    });
+  </script>
 </body>
 </html>

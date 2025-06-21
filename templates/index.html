@@ -108,53 +108,39 @@
   <button class="theme-toggle" id="themeToggle" aria-label="Changer le thème">
     <i class="fas fa-moon"></i>
   </button>
+
   <div class="form-container">
     <h1><span class="glow"><i class="fas fa-location-arrow"></i> Chemin le Plus Court à Casablanca</span></h1>
-    <form id="cheminForm">
+
+    <form id="cheminForm" method="post" action="/">
       <div class="mb-3">
         <label for="start" class="form-label"><i class="fas fa-map-pin"></i> Point de départ :</label>
-        <input type="text" class="form-control" id="start" placeholder="ex: Marjane Californie" required>
+        <input type="text" class="form-control" id="start" name="start" placeholder="ex: Marjane Californie" required>
       </div>
+
       <div class="mb-3">
         <label for="end" class="form-label"><i class="fas fa-flag-checkered"></i> Point d'arrivée :</label>
-        <input type="text" class="form-control" id="end" placeholder="ex: Faculté des Sciences" required>
+        <input type="text" class="form-control" id="end" name="end" placeholder="ex: Faculté des Sciences" required>
       </div>
+
       <div class="mb-4">
         <label for="mode" class="form-label"><i class="fas fa-car"></i> Mode de transport :</label>
-        <select class="form-select" id="mode">
+        <select class="form-select" id="mode" name="mode">
           <option value="voiture">🚗 Voiture</option>
           <option value="pied">🚶‍♂️ À pied</option>
         </select>
       </div>
+
       <button type="submit" class="btn btn-primary w-100" id="calculerBtn">
         <i class="fas fa-route"></i> Calculer
       </button>
     </form>
   </div>
+
   <script>
-    const form = document.getElementById("cheminForm");
-    const btn = document.getElementById("calculerBtn");
     const toggleBtn = document.getElementById("themeToggle");
     const icon = toggleBtn.querySelector("i");
     const favicon = document.getElementById("favicon");
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      if (navigator.vibrate) navigator.vibrate(100);
-      btn.disabled = true;
-      btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Calcul en cours...`;
-      btn.classList.remove("btn-primary");
-      btn.classList.add("btn-secondary");
-      setTimeout(() => {
-        btn.classList.replace("btn-secondary","btn-success");
-        btn.innerHTML = `<i class="fas fa-check-circle"></i> Chemin trouvé !`;
-        setTimeout(() => {
-          btn.disabled = false;
-          btn.classList.replace("btn-success","btn-primary");
-          btn.innerHTML = `<i class="fas fa-route"></i> Calculer`;
-        }, 2500);
-      }, 2000);
-    });
 
     toggleBtn.addEventListener("click", () => {
       document.body.classList.toggle("dark-mode");
